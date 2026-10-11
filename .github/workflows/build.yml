@@ -1,45 +1,38 @@
-```yaml
 name: Build STRIKE FORCE
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
+workflow_dispatch:
+push:
+branches:
+- main
 
 jobs:
-  build:
-    name: Package Godot Project
-    runs-on: ubuntu-latest
+build:
+name: Package Godot Project
+runs-on: ubuntu-latest
 
-    steps:
-      - name: Download source code
-        uses: actions/checkout@v4
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
 
-      - name: Check project files
-        run: |
-          test -f project.godot
-          test -f scenes/main.tscn
-          test -f scripts/game.gd
-          echo "STRIKE FORCE project files found!"
+  - name: Check project files
+    run: |
+      test -f project.godot
+      test -f scenes/main.tscn
+      test -f scripts/game.gd
+      echo "STRIKE FORCE project files found!"
 
-      - name: Package game
-        run: |
-          mkdir -p dist
-          zip -r dist/STRIKE_FORCE.zip \
-            project.godot \
-            README.md \
-            scenes \
-            scripts \
-            assets \
-            .github
+  - name: Package game
+    run: |
+      mkdir -p dist
+      zip -r dist/STRIKE_FORCE.zip project.godot README.md scenes scripts assets
 
-      - name: Upload game project
-        uses: actions/upload-artifact@v4
-        with:
-          name: STRIKE-FORCE-GODOT
-          path: dist/STRIKE_FORCE.zip
-          if-no-files-found: error
-          retention-days: 14
+  - name: Upload game project
+    uses: actions/upload-artifact@v4
+    with:
+      name: STRIKE-FORCE-GODOT
+      path: dist/STRIKE_FORCE.zip
+      if-no-files-found: error
+      retention-days: 14
 ```

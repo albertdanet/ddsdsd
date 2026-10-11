@@ -1,22 +1,15 @@
+
 name: Build STRIKE FORCE
 'on': [push, workflow_dispatch]
 
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v4
-
-```
-  - name: Check files
-    run: test -d scenes && test -d scripts && test -d assets
-
-  - name: Create archive
-    run: zip -r STRIKE_FORCE.zip scenes scripts assets README.md .github
-
-  - name: Upload archive
-    uses: actions/upload-artifact@v4
-    with:
-      name: STRIKE-FORCE-GODOT
-      path: STRIKE_FORCE.zip
-```
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: test -d scenes && test -d scripts && test -d assets
+      - run: zip -r STRIKE_FORCE.zip scenes scripts assets README.md .github
+      - uses: actions/upload-artifact@v4
+        with:
+          name: STRIKE-FORCE-GODOT
+          path: STRIKE_FORCE.zip
